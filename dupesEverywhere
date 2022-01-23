@@ -1,8 +1,25 @@
 const obj1 = {
-    "1": ["C", "F", "G"],
-    "2": ["A", "B", "C"],
-    "3": ["A", "B", "D"],
+  "1": ["C", "F", "G"],
+  "2": ["A", "B", "C"],
+  "3": ["A", "B", "D"],
 };
+
+const obj3 = {
+  "11": ["P", "R", "S", "D"],
+  "53": ["L", "G", "B", "C"],
+  "236": ["L", "A", "X", "G", "H", "X"],
+  "432": ["A", "A", "B", "D"],
+};
+
+/*
+result should be
+    {
+      "11": ["P", "R", "S"],
+      "53": ["C"],
+      "236": ["L", "X", "G", "H"],
+      "432": ["A", "B", "D"],
+    });
+*/
 
 const removeDuplicateIds = (obj) => {
     console.log (obj);
@@ -11,21 +28,39 @@ const removeDuplicateIds = (obj) => {
             if (key != key2){
                 for (let i = 0; i < obj[key].length; i++){
                     for (let i2 = 0; i2 < obj[key2].length; i2++){
-                        console.log (`compare ${obj[key][i]} to ${obj[key2][i2]}`);
+                        console.log (`compare ${key} : ${obj[key][i]} to ${key2} : ${obj[key2][i2]}`);
                         if (obj[key][i] == obj[key2][i2]){
-                          console.log ('Match found!');
-                          obj[key].splice(i,1);
-                          console.log (`new obj1 = ${obj[key]}`);
+                          console.log ('*****Match found!*****');
+                          if (Number(key) > Number(key2)){
+                            console.log (`removin ${obj[key2][i]} from ${key2}`);
+                            obj[key2].splice(i,1);
+                          }else{
+                            console.log (`removing ${obj[key][i]} from ${key}`);
+                            obj[key].splice(i,1);
+                          }
                         }
                     }
                 }
             }
         }
     }
+    //remove dupes within the same key
+    for (let key in obj){
+      for (let i1 = 0; i1 < obj[key].length; i1++){
+        for(let i2 = 0; i2 < obj[key].length; i2++){
+          if (i1 != i2 && obj[key][i1] == obj[key][i2]){
+            obj[key].splice(i2,1);
+          }
+        }
+      }
+    }
+    for (let key in obj){
+      console.log (`${key}: ${obj[key]}`);
+    }
     return obj;
 };
 
-removeDuplicateIds(obj1);
+removeDuplicateIds(obj3);
 
 
 
