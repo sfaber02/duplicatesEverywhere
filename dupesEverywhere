@@ -10,16 +10,40 @@ const obj3 = {
   "236": ["L", "A", "X", "G", "H", "X"],
   "432": ["A", "A", "B", "D"],
 };
-
 /*
 result should be
-    {
+{
       "11": ["P", "R", "S"],
       "53": ["C"],
       "236": ["L", "X", "G", "H"],
       "432": ["A", "B", "D"],
     });
 */
+
+const obj4 = {
+  '295': [ 'B', 'F', 'D', 'P', 'C', 'M', 'E' ],
+  '323': [ 'P', 'X', 'N', 'F', 'Y', 'S', 'I', 'Q', 'G' ],
+  '324': [ 'C', 'H', 'U', 'P' ],
+  '356': [ 'J', 'J', 'K', 'F', 'B', 'Q', 'Q', 'U', 'H' ],
+  '520': [ 'U', 'C', 'T', 'F', 'Q' ],
+  '808': [ 'T', 'L', 'M', 'C', 'A', 'P' ],
+  '914': [ 'K', 'Y', 'S', 'B', 'E', 'Y', 'R' ],
+  '990': [ 'D', 'I', 'U', 'I', 'Y', 'A', 'Q', 'B', 'C' ] 
+};
+
+const obj5 = {
+  '608': [ 'Q', 'Y', 'J', 'C', 'G', 'X', 'T', 'C', 'C' ],
+  '917': [ 'W', 'B', 'U', 'G', 'A', 'D', 'R', 'M', 'G' ],
+  '933': [ 'W', 'L', 'U', 'U', 'L' ] 
+}
+
+/*
+should be
+{ '608': [ 'Q', 'Y', 'J', 'C', 'X', 'T' ],
+  '917': [ 'B', 'G', 'A', 'D', 'R', 'M' ],
+  '933': [ 'W', 'L', 'U' ] }
+*/
+
 
 const removeDuplicateIds = (obj) => {
     console.log (obj);
@@ -32,11 +56,13 @@ const removeDuplicateIds = (obj) => {
                         if (obj[key][i] == obj[key2][i2]){
                           console.log ('*****Match found!*****');
                           if (Number(key) > Number(key2)){
-                            console.log (`removin ${obj[key2][i]} from ${key2}`);
+                            console.log (`removing ${obj[key2][i]} from ${key2}`);
                             obj[key2].splice(i,1);
+                            i--;
                           }else{
                             console.log (`removing ${obj[key][i]} from ${key}`);
                             obj[key].splice(i,1);
+                            i--;
                           }
                         }
                     }
@@ -47,7 +73,7 @@ const removeDuplicateIds = (obj) => {
     //remove dupes within the same key
     for (let key in obj){
       for (let i1 = 0; i1 < obj[key].length; i1++){
-        for(let i2 = 0; i2 < obj[key].length; i2++){
+        for(let i2 = obj[key].length - 1; i2 >= 0; i2--){
           if (i1 != i2 && obj[key][i1] == obj[key][i2]){
             obj[key].splice(i2,1);
           }
@@ -60,7 +86,7 @@ const removeDuplicateIds = (obj) => {
     return obj;
 };
 
-removeDuplicateIds(obj3);
+removeDuplicateIds(obj5);
 
 
 
